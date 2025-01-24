@@ -1,23 +1,25 @@
-import { sql } from "drizzle-orm";
-import { db } from "@/db";
+// import { sql } from "drizzle-orm";
+// import { db } from "@/db";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { formAction } from "@/app/actions";
 
 export default async function NewInvoicePage() {
-  const results = await db.execute(sql`SELECT current_database()`);
-  console.log("RESULTS", results);
+  // const results = await db.execute(sql`SELECT current_database()`);
+  // console.log("RESULTS", results);
+
+  
 
   return (
     <main className="max-w-5xl mx-auto flex flex-col justify-center  h-full  gap-6 my-12">
       <div className="flex justify-between">
         <h1 className="text-3xl font-semibold">Create Invoice</h1>
       </div>
-      {JSON.stringify(results)}
 
-      <form className="grid gap-4 max-w-xs">
+      <form className="grid gap-4 max-w-xs" action={formAction}>
         <div>
           <Label className="font-semibold block text-sm mb-2" htmlFor="name">
             Billing Name
