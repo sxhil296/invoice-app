@@ -1,7 +1,9 @@
 import { Badge } from "@/components/ui/badge";
 import { db } from "@/db";
 import { Invoices } from "@/db/schema";
+import { cn } from "@/lib/utils";
 import { eq } from "drizzle-orm";
+import { notFound } from "next/navigation";
 
 export default async function InvoicePage({
   params,
@@ -10,11 +12,19 @@ export default async function InvoicePage({
 }) {
   const invoiceId = parseInt((await params).invoiceId);
 
+  if (isNaN(invoiceId)) {
+    throw new Error("Invalid Invoice ID");
+  }
+
   const [result] = await db
     .select()
     .from(Invoices)
     .where(eq(Invoices.id, invoiceId))
     .limit(1);
+
+  if (!result) {
+    notFound();
+  }
 
   console.log("result", result);
 
@@ -23,7 +33,17 @@ export default async function InvoicePage({
       <div className="flex justify-between mb-8">
         <h1 className="text-3xl font-semibold flex items-center gap-4">
           Invoice #{invoiceId}{" "}
-          <Badge className="rounded-full">{result?.status}</Badge>
+          <Badge
+            className={cn(
+              "rounded-full capitalize",
+              result?.status === "open" && "bg-blue-500",
+              result?.status === "paid" && "bg-green-500",
+              result?.status === "void" && "bg-zinc-500",
+              result?.status === "uncollectible" && "bg-red-500"
+            )}
+          >
+            {result?.status}
+          </Badge>
         </h1>
         <p></p>
       </div>
