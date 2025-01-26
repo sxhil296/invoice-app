@@ -8,6 +8,13 @@
       "when": 1737758898380,
       "tag": "0000_famous_warbound",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1737884773051,
+      "tag": "0001_sturdy_ezekiel",
+      "breakpoints": true
     }
   ]
 }
