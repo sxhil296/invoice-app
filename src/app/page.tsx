@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex flex-col justify-center items-center min-h-screen text-center gap-6">
-      <Container>
+    <main className="h-full flex justify-center items-center">
+      <Container className="flex justify-center flex-col gap-6 items-center">
         <h1 className="text-5xl font-bold">Invoicepedia</h1>
         <p>
           <Button asChild>
