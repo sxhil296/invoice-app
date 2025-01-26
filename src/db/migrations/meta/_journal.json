@@ -15,6 +15,13 @@
       "when": 1737884773051,
       "tag": "0001_sturdy_ezekiel",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1737917071717,
+      "tag": "0002_conscious_spot",
+      "breakpoints": true
     }
   ]
 }
