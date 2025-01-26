@@ -6,13 +6,15 @@ import {
   integer,
   pgEnum,
 } from "drizzle-orm/pg-core";
+import { STATUS_OPTIONS } from "@/data/invoices";
 
-export const statusEnum = pgEnum("status", [
-  "open",
-  "void",
-  "paid",
-  "uncollectible",
-]);
+export type Status = (typeof STATUS_OPTIONS)[number]["id"];
+const statues = STATUS_OPTIONS.map((status) => status.id) as Array<Status>;
+
+export const statusEnum = pgEnum(
+  "status",
+  statues as [Status, ...Array<Status>]
+);
 
 export const Invoices = pgTable("invoices", {
   id: serial("id").primaryKey().notNull(),

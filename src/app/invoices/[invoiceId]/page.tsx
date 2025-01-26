@@ -6,6 +6,16 @@ import { cn } from "@/lib/utils";
 import { and, eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { STATUS_OPTIONS } from "@/data/invoices";
+import { updateInvoiceStatus } from "@/app/actions";
+import { ChevronDown } from "lucide-react";
 
 export default async function InvoicePage({
   params,
@@ -33,10 +43,10 @@ export default async function InvoicePage({
   console.log("result", result);
 
   return (
-    <main className="h-full flex justify-center items-center">
+    <main className="h-full w-full">
       <Container>
         <div className="flex justify-between mb-8">
-          <h1 className="text-3xl font-semibold flex items-center gap-4">
+          <h1 className="text-2xl md:text-3xl font-semibold flex items-center gap-2  md:gap-4">
             Invoice #{invoiceId}{" "}
             <Badge
               className={cn(
@@ -50,7 +60,26 @@ export default async function InvoicePage({
               {result?.status}
             </Badge>
           </h1>
-          <p></p>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant={"outline"} className="flex items-center gap-2">
+                Change Status
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {STATUS_OPTIONS.map((status) => (
+                <DropdownMenuItem key={status.id}>
+                  <form action={updateInvoiceStatus}>
+                    <input type="hidden" name="id" value={invoiceId} />
+                    <input type="hidden" name="status" value={status.id} />
+                    <button> {status.name}</button>
+                  </form>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         <p className="text-3xl mb-3"> ${(result?.value / 100).toFixed(2)}</p>
