@@ -9,6 +9,7 @@ import { formAction } from "@/app/actions";
 import { SyntheticEvent, useState } from "react";
 import Form from "next/form";
 import SubmitButton from "@/components/general/submitButton";
+import Container from "@/components/general/container";
 // import { startTransition } from "react";
 
 export default function NewInvoicePage() {
@@ -32,8 +33,9 @@ export default function NewInvoicePage() {
   }
 
   return (
-    <main className="max-w-5xl mx-auto flex flex-col justify-center  h-full  gap-6 my-12">
-      <div className="flex justify-between">
+    <main className="h-full">
+      <Container>
+      <div className="flex justify-between mb-6">
         <h1 className="text-3xl font-semibold">Create Invoice</h1>
       </div>
 
@@ -73,6 +75,8 @@ export default function NewInvoicePage() {
         {/* <Button className="w-full font-semibold">Submit</Button> */}
         <SubmitButton />
       </Form>
+      </Container>
+     
     </main>
   );
 }
