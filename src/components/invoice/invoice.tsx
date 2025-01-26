@@ -2,18 +2,11 @@
 import Container from "@/components/general/container";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { STATUS_OPTIONS } from "@/data/invoices";
 import { updateInvoiceStatus } from "@/app/actions";
-import { ChevronDown } from "lucide-react";
 import { Invoices } from "@/db/schema";
 import { useOptimistic } from "react";
+import MoreOptions from "./deleteInvoice";
+import ChangeStatus from "./changeStatus";
 
 interface InvoiceProps {
   invoice: typeof Invoices.$inferSelect;
@@ -56,25 +49,10 @@ export default function Invoice({ invoice }: InvoiceProps) {
             </Badge>
           </h1>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant={"outline"} className="flex items-center gap-2">
-                Change Status
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {STATUS_OPTIONS.map((status) => (
-                <DropdownMenuItem key={status.id}>
-                  <form action={handleOnUpdateStatus}>
-                    <input type="hidden" name="id" value={invoice.id} />
-                    <input type="hidden" name="status" value={status.id} />
-                    <button> {status.name}</button>
-                  </form>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex justify-center items-center gap-2">
+            <ChangeStatus action={handleOnUpdateStatus} invoice={invoice} />
+            <MoreOptions invoiceId={invoice.id} />
+          </div>
         </div>
 
         <p className="text-3xl mb-3"> ${(invoice?.value / 100).toFixed(2)}</p>
