@@ -1,4 +1,4 @@
-import { Ellipsis, Trash } from "lucide-react";
+import { CreditCardIcon, Ellipsis, Trash } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -17,6 +17,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { deleteInvoiceAction } from "@/app/actions";
+import Link from "next/link";
 
 interface MoreOptionsProps {
   invoiceId: number;
@@ -34,19 +35,19 @@ export default function MoreOptions({ invoiceId }: MoreOptionsProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {/* <DropdownMenuItem>
-                    <form action={deleteInvoiceAction}>
-                      <input type="hidden" name="id" value={invoice.id} />
-                      <button className="flex items-center justify-start gap-2 text-sm">
-                        <IndianRupee className="h-4 w-4" />
-                        Add Payment
-                      </button>
-                    </form>
-                  </DropdownMenuItem> */}
+            <DropdownMenuItem>
+              <Link
+                href={`/invoices/${invoiceId}/payment`}
+                className="flex items-center justify-start gap-2 text-sm"
+              >
+                <CreditCardIcon className="h-auto w-4" />
+                Payment
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <DialogTrigger asChild>
                 <button className="flex items-center justify-start gap-2 text-sm">
-                  <Trash className="h-4 w-4" />
+                  <Trash className="h-auto w-4" />
                   Delete Invoice
                 </button>
               </DialogTrigger>

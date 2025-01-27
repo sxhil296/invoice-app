@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { updateInvoiceStatus } from "@/app/actions";
 import { Customers, Invoices } from "@/db/schema";
 import { useOptimistic } from "react";
-import MoreOptions from "./deleteInvoice";
+import MoreOptions from "./moreOptions";
 import ChangeStatus from "./changeStatus";
 
 interface InvoiceProps {
