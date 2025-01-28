@@ -45,7 +45,7 @@ export default async function DashboardPage() {
 
   console.log("RESULTS", results);
 
-  const invoices = results?.map((invoices, customers) => {
+  const invoices = results?.map((invoices) => {
     return {
       ...invoices.invoices,
       customer: invoices.customers,
