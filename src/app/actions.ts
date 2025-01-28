@@ -7,9 +7,12 @@ import { auth } from "@clerk/nextjs/server";
 import { and, eq, isNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import Stripe from "stripe";
+import {Resend} from 'resend'
 import { headers } from "next/headers";
+import {InvoiceCreatedEmail} from "@/components/email/invoiceCreated";
 
 const stripe = new Stripe(String(process.env.STRIPE_API_SECRET));
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function formAction(formData: FormData) {
   const { userId, redirectToSignIn, orgId } = await auth();
@@ -44,6 +47,13 @@ export async function formAction(formData: FormData) {
     })
     .returning({
       id: Invoices.id,
+    });
+
+    await resend.emails.send({
+      from: "Invoicepedia <invoicepedia@invoicepedia.com>",
+      to: [email],
+      subject: "You Have a New Invoice",
+      react: InvoiceCreatedEmail({ invoiceId: results[0].id }),
     });
 
   redirect(`/invoices/${results[0].id}`);
