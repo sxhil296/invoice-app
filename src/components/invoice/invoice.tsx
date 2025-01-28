@@ -27,8 +27,12 @@ export default function Invoice({ invoice }: InvoiceProps) {
     setCurrenStatus(formData.get("status") as string);
     try {
       await updateInvoiceStatus(formData);
-    } catch (error:unknown) {
-      console.log("error", error);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error updating status:", error.message);
+      } else {
+        console.error("Unknown error:", error);
+      }
       setCurrenStatus(originalStatus);
     }
   }
